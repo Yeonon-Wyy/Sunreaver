@@ -1,0 +1,17 @@
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: y-cloud-disk
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/ycd?useSSL=false
+    username: root
+    password: 124563
+    driver-class-name: com.mysql.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
