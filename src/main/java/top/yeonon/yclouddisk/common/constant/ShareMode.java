@@ -1,4 +1,4 @@
-package top.yeonon.yclouddisk.constant;
+package top.yeonon.yclouddisk.common.constant;
 
 /**
  * @Author yeonon

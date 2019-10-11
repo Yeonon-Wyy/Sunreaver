@@ -3,6 +3,7 @@ package top.yeonon.yclouddisk.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import top.yeonon.yclouddisk.common.constant.ShareMode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -34,13 +35,18 @@ public class CloudFile {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
+    @Column(name = "size", nullable = false, length = 20)
+    private Long size;
+
     @Column(name = "update_time", nullable = false)
     private Date updateTime;
+
+
 
     public CloudFile(String filename, String filepath, Long userId) {
         this.filename = filename;
         this.filepath = filepath;
         this.userId = userId;
-
+        this.shareMode = ShareMode.ALLOW_SHARE_EVERYONE.getCode();
     }
 }
