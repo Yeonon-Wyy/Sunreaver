@@ -8,8 +8,11 @@ public enum  ResponseStatus {
     //success code
     SUCCESS(200, "response success"),
 
-    //error code 500 - 599
-    ERROR(500, "response error");
+    //error code 0 - 99
+    ERROR(0, "response error"),
+    REQUEST_PARAM_ERROR(1, "request parameter(s) error!"),
+    ;
+
     //TODO: add more enum
 
     private int code;

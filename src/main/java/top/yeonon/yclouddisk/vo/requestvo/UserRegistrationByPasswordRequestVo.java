@@ -18,7 +18,7 @@ public class UserRegistrationByPasswordRequestVo {
     private String password;
     private Integer sex;
 
-    public boolean valid() {
+    public boolean validate() {
         return StringUtils.isNotEmpty(username)
                 && StringUtils.isNotEmpty(password)
                 && sex != null && sex >= 0;

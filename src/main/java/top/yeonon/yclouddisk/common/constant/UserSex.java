@@ -5,7 +5,6 @@ package top.yeonon.yclouddisk.common.constant;
  * @date 2019/10/11 0011 23:08
  **/
 public enum UserSex {
-    DONT_KNOWN(0),
     MALE(1),
     FEMALE(2),
     FUZZY(3),

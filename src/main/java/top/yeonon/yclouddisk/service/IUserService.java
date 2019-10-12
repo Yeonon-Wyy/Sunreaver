@@ -1,5 +1,6 @@
 package top.yeonon.yclouddisk.service;
 
+import top.yeonon.yclouddisk.common.exception.YCDException;
 import top.yeonon.yclouddisk.common.response.ServiceResponse;
 import top.yeonon.yclouddisk.entity.User;
 import top.yeonon.yclouddisk.vo.requestvo.UserRegistrationByPasswordRequestVo;
@@ -11,7 +12,8 @@ import top.yeonon.yclouddisk.vo.responsevo.UserRegistrationByPasswordResponseVo;
  **/
 public interface IUserService {
 
-    ServiceResponse<UserRegistrationByPasswordResponseVo> userRegistration(UserRegistrationByPasswordRequestVo userRequestVo);
+    UserRegistrationByPasswordResponseVo userRegistration(UserRegistrationByPasswordRequestVo userRequestVo)
+            throws YCDException;
 
 
 }
