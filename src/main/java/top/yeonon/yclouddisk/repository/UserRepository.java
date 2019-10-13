@@ -12,5 +12,7 @@ import top.yeonon.yclouddisk.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findUserByUsername(@Param("username") String username);
+    boolean existsByUsername(@Param("username") String username);
+
+    User findUserByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 }
