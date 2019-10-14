@@ -1,5 +1,6 @@
 package top.yeonon.yclouddisk.controller;
 
+import com.github.benmanes.caffeine.cache.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,8 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+    @Autowired
+    private Cache<String, String> userIdCache;
 
     @PostMapping
     public UserRegistrationByPasswordResponseVo userRegistrationByPassword(@RequestBody UserRegistrationByPasswordRequestVo requestVo) {
