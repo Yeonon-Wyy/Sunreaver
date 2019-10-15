@@ -46,7 +46,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         String token = tokenWithBaraer.substring(7);
 
         Long userId = JwtUtil.getValueFromToken(token, "id", Long.class);
-        if (!token.equals(tokenCache.getIfPresent(String.valueOf(userId)))) {
+        if (!token.equals(tokenCache.getIfPresent(String.valueOf(userId)))
+            || !getUserId(request).equals(userId)) {
             throw new YCDException(ResponseStatus.NOT_ALLOW_ACTION.getCode(),
                     ResponseStatus.NOT_ALLOW_ACTION.getDescription());
         }

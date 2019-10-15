@@ -1,32 +1,18 @@
 package top.yeonon.yclouddisk.service.impl;
 
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.collections4.map.SingletonMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.yeonon.yclouddisk.common.constant.UserStatus;
 import top.yeonon.yclouddisk.common.exception.YCDException;
 import top.yeonon.yclouddisk.common.response.ResponseStatus;
-import top.yeonon.yclouddisk.common.response.ServiceResponse;
-import top.yeonon.yclouddisk.common.util.JwtUtil;
 import top.yeonon.yclouddisk.entity.User;
 import top.yeonon.yclouddisk.repository.UserRepository;
 import top.yeonon.yclouddisk.service.IUserService;
-import top.yeonon.yclouddisk.vo.requestvo.UserLoginByPasswordRequestVo;
+import top.yeonon.yclouddisk.vo.requestvo.QueryUserInfoRequestVo;
 import top.yeonon.yclouddisk.vo.requestvo.UserRegistrationByPasswordRequestVo;
-import top.yeonon.yclouddisk.vo.responsevo.UserLoginByPasswordResponseVo;
+import top.yeonon.yclouddisk.vo.responsevo.QueryUserInfoResponseVo;
 import top.yeonon.yclouddisk.vo.responsevo.UserRegistrationByPasswordResponseVo;
-
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Author yeonon
@@ -35,8 +21,7 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class UserServiceImpl implements IUserService {
 
-    @Autowired
-    private Cache<String, String> tokenCache;
+
 
     @Autowired
     private UserRepository userRepository;
@@ -67,26 +52,28 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserLoginByPasswordResponseVo userLoginByPassword(UserLoginByPasswordRequestVo requestVo) throws YCDException {
+    public QueryUserInfoResponseVo queryUserInfo(QueryUserInfoRequestVo requestVo) throws YCDException {
         if (!requestVo.validate()) {
             throw new YCDException(ResponseStatus.REQUEST_PARAM_ERROR.getCode(),
                     ResponseStatus.REQUEST_PARAM_ERROR.getDescription());
         }
 
-        //检查用户名和密码是否正确
-        User user = userRepository.findUserByUsernameAndPassword(requestVo.getUsername(),
-                DigestUtils.md5Hex(requestVo.getPassword()));
-        if (user == null) {
-            throw new YCDException(ResponseStatus.USERNAME_OR_PASSWORD_ERROR.getCode(),
-                    ResponseStatus.USERNAME_OR_PASSWORD_ERROR.getDescription());
+        User user = userRepository.findById(requestVo.getId()).orElse(null);
+        if (user == null || UserStatus.LOGOUT.getCode().equals(user.getStatus())) {
+            throw new YCDException(ResponseStatus.NOT_EXIST_USER.getCode(),
+                    ResponseStatus.NOT_EXIST_USER.getDescription());
         }
 
-        String token = JwtUtil.generateToken(new SingletonMap<>("id", user.getId()));
-        //将用户token信息存入cache
-        tokenCache.put(String.valueOf(user.getId()), token);
-
-        return new UserLoginByPasswordResponseVo(
-                user.getId()
+        return new QueryUserInfoResponseVo(
+                user.getUsername(),
+                user.getPassword(),
+                user.getSex(),
+                user.getAvatar(),
+                user.getPhoneNumber(),
+                user.getProfile(),
+                user.getStatus(),
+                user.getCreateTime(),
+                user.getUpdateTime()
         );
     }
 }

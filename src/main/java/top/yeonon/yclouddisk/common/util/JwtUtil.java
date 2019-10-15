@@ -16,7 +16,7 @@ import java.util.Map;
  **/
 public class JwtUtil {
 
-    private static final Key key = Keys.hmacShaKeyFor("y-cloud-disk".getBytes());
+    private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public static String generateToken(Map<String, Object> info) {
 

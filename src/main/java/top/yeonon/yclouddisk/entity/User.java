@@ -3,7 +3,9 @@ package top.yeonon.yclouddisk.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 import top.yeonon.yclouddisk.common.constant.DefaultAvatar;
+import top.yeonon.yclouddisk.common.constant.UserStatus;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -41,17 +43,23 @@ public class User {
     @Column(name = "profile")
     private String profile;
 
+    @Column(name = "status", nullable = false, length = 4)
+    private Integer status;
+
     @Column(name = "create_time", nullable = false)
     private Date createTime;
 
     @Column(name = "update_time", nullable = false)
     private Date updateTime;
 
+
+
     public User(String username, String password, Integer sex) {
         this.username = username;
         this.password = password;
         this.sex = sex;
         this.avatar = DefaultAvatar.getAddress(sex);
+        this.status = UserStatus.NORMAL.getCode();
         this.createTime = new Date();
         this.updateTime = this.createTime;
     }

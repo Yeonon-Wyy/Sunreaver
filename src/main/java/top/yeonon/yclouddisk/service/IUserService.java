@@ -1,8 +1,10 @@
 package top.yeonon.yclouddisk.service;
 
 import top.yeonon.yclouddisk.common.exception.YCDException;
+import top.yeonon.yclouddisk.vo.requestvo.QueryUserInfoRequestVo;
 import top.yeonon.yclouddisk.vo.requestvo.UserLoginByPasswordRequestVo;
 import top.yeonon.yclouddisk.vo.requestvo.UserRegistrationByPasswordRequestVo;
+import top.yeonon.yclouddisk.vo.responsevo.QueryUserInfoResponseVo;
 import top.yeonon.yclouddisk.vo.responsevo.UserLoginByPasswordResponseVo;
 import top.yeonon.yclouddisk.vo.responsevo.UserRegistrationByPasswordResponseVo;
 
@@ -22,6 +24,12 @@ public interface IUserService {
             throws YCDException;
 
 
-    UserLoginByPasswordResponseVo userLoginByPassword(UserLoginByPasswordRequestVo requestVo)
-        throws YCDException;
+    /**
+     * 查询用户信息（本人查看）
+     * @param requestVo 请求对象
+     * @return 响应对象
+     * @throws YCDException 抛出的异常
+     */
+    QueryUserInfoResponseVo queryUserInfo(QueryUserInfoRequestVo requestVo)
+            throws YCDException;
 }
