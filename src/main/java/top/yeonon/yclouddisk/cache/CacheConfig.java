@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class CacheConfig {
 
     @Bean
-    public Cache<String, String> UserIdCache() {
+    public Cache<String, String> tokenCache() {
         //TODO: 暂时使用hard code，目前只是为了功能完整
         return Caffeine
                 .newBuilder()

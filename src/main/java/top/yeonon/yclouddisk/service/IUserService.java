@@ -21,6 +21,7 @@ public interface IUserService {
     UserRegistrationByPasswordResponseVo userRegistrationByPassword(UserRegistrationByPasswordRequestVo userRequestVo)
             throws YCDException;
 
+
     UserLoginByPasswordResponseVo userLoginByPassword(UserLoginByPasswordRequestVo requestVo)
         throws YCDException;
 }

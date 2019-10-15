@@ -14,7 +14,11 @@ public enum  ResponseStatus {
 
     //user service error code 100-199
     USERNAME_ALREADY_EXISTS(100, "username already exists!"),
-    USERNAME_OR_PASSWORD_ERROR(101, "username or password error!")
+    USERNAME_OR_PASSWORD_ERROR(101, "username or password error!"),
+
+    //auth service error code 200-299
+    NOT_EXIST_TOKEN_IN_HEAD(200, "here is no token in the header!"),
+    NOT_ALLOW_ACTION(201, "doesn't allow the action!"),
     ;
 
     //TODO: add more enum

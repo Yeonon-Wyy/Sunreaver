@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 public class UserServiceImpl implements IUserService {
 
     @Autowired
-    private Cache<String, String> userIdCache;
+    private Cache<String, String> tokenCache;
 
     @Autowired
     private UserRepository userRepository;
@@ -81,9 +81,9 @@ public class UserServiceImpl implements IUserService {
                     ResponseStatus.USERNAME_OR_PASSWORD_ERROR.getDescription());
         }
 
-        String token = JwtUtil.generateToken(new SingletonMap<>("id", String.valueOf(user.getId())));
+        String token = JwtUtil.generateToken(new SingletonMap<>("id", user.getId()));
         //将用户token信息存入cache
-        userIdCache.put(String.valueOf(user.getId()), token);
+        tokenCache.put(String.valueOf(user.getId()), token);
 
         return new UserLoginByPasswordResponseVo(
                 user.getId()
