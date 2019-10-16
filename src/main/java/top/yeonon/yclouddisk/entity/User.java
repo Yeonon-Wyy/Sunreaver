@@ -3,8 +3,9 @@ package top.yeonon.yclouddisk.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
+import org.apache.commons.lang3.RandomStringUtils;
 import top.yeonon.yclouddisk.common.constant.DefaultAvatar;
+import top.yeonon.yclouddisk.common.constant.UserRole;
 import top.yeonon.yclouddisk.common.constant.UserStatus;
 
 import javax.persistence.*;
@@ -46,12 +47,23 @@ public class User {
     @Column(name = "status", nullable = false, length = 4)
     private Integer status;
 
+    @Column(name = "role", nullable = false, length = 4)
+    private Integer role;
+
+    @Column(name = "nick_name", nullable = false, length = 255)
+    private String nickName;
+
+    @Column(name = "question")
+    private String question;
+
+    @Column(name = "answer")
+    private String answer;
+
     @Column(name = "create_time", nullable = false)
     private Date createTime;
 
     @Column(name = "update_time", nullable = false)
     private Date updateTime;
-
 
 
     public User(String username, String password, Integer sex) {
@@ -60,6 +72,8 @@ public class User {
         this.sex = sex;
         this.avatar = DefaultAvatar.getAddress(sex);
         this.status = UserStatus.NORMAL.getCode();
+        this.role = UserRole.GENERAL.getCoed();
+        this.nickName = RandomStringUtils.randomAlphabetic(15);
         this.createTime = new Date();
         this.updateTime = this.createTime;
     }

@@ -3,6 +3,7 @@ package top.yeonon.yclouddisk.service.impl;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.yeonon.yclouddisk.aop.ParamValidate;
 import top.yeonon.yclouddisk.common.constant.UserStatus;
 import top.yeonon.yclouddisk.common.exception.YCDException;
 import top.yeonon.yclouddisk.common.response.ResponseStatus;
@@ -10,8 +11,10 @@ import top.yeonon.yclouddisk.entity.User;
 import top.yeonon.yclouddisk.repository.UserRepository;
 import top.yeonon.yclouddisk.service.IUserService;
 import top.yeonon.yclouddisk.vo.requestvo.QueryUserInfoRequestVo;
+import top.yeonon.yclouddisk.vo.requestvo.UpdateUserInfoRequestVo;
 import top.yeonon.yclouddisk.vo.requestvo.UserRegistrationByPasswordRequestVo;
 import top.yeonon.yclouddisk.vo.responsevo.QueryUserInfoResponseVo;
+import top.yeonon.yclouddisk.vo.responsevo.UpdateUserInfoResponseVo;
 import top.yeonon.yclouddisk.vo.responsevo.UserRegistrationByPasswordResponseVo;
 
 /**
@@ -21,17 +24,12 @@ import top.yeonon.yclouddisk.vo.responsevo.UserRegistrationByPasswordResponseVo;
 @Service
 public class UserServiceImpl implements IUserService {
 
-
-
     @Autowired
     private UserRepository userRepository;
 
+    @ParamValidate
     @Override
     public UserRegistrationByPasswordResponseVo userRegistrationByPassword(UserRegistrationByPasswordRequestVo userRequestVo) throws YCDException {
-        if (!userRequestVo.validate()) {
-            throw new YCDException(ResponseStatus.REQUEST_PARAM_ERROR.getCode(),
-                    ResponseStatus.REQUEST_PARAM_ERROR.getDescription());
-        }
         //检查是否已存在用户名
         if (userRepository.existsByUsername(userRequestVo.getUsername())) {
             throw new YCDException(ResponseStatus.USERNAME_ALREADY_EXISTS.getCode(),
@@ -51,29 +49,63 @@ public class UserServiceImpl implements IUserService {
         );
     }
 
+    @ParamValidate
     @Override
     public QueryUserInfoResponseVo queryUserInfo(QueryUserInfoRequestVo requestVo) throws YCDException {
-        if (!requestVo.validate()) {
-            throw new YCDException(ResponseStatus.REQUEST_PARAM_ERROR.getCode(),
-                    ResponseStatus.REQUEST_PARAM_ERROR.getDescription());
-        }
 
         User user = userRepository.findById(requestVo.getId()).orElse(null);
-        if (user == null || UserStatus.LOGOUT.getCode().equals(user.getStatus())) {
+        if (user == null || UserStatus.DELETE.getCode().equals(user.getStatus())) {
             throw new YCDException(ResponseStatus.NOT_EXIST_USER.getCode(),
                     ResponseStatus.NOT_EXIST_USER.getDescription());
         }
 
         return new QueryUserInfoResponseVo(
-                user.getUsername(),
-                user.getPassword(),
+                user.getNickName(),
                 user.getSex(),
                 user.getAvatar(),
                 user.getPhoneNumber(),
                 user.getProfile(),
                 user.getStatus(),
+                user.getRole(),
                 user.getCreateTime(),
                 user.getUpdateTime()
         );
+    }
+
+    @ParamValidate
+    @Override
+    public QueryUserInfoResponseVo queryOtherUserInfo(QueryUserInfoRequestVo requestVo) throws YCDException {
+
+        User user = userRepository.findById(requestVo.getId()).orElse(null);
+        if (user == null || UserStatus.DELETE.getCode().equals(user.getStatus())) {
+            throw new YCDException(ResponseStatus.NOT_EXIST_USER.getCode(),
+                    ResponseStatus.NOT_EXIST_USER.getDescription());
+        }
+
+        return new QueryUserInfoResponseVo(
+                user.getNickName(),
+                user.getSex(),
+                user.getAvatar(),
+                user.getProfile(),
+                user.getRole()
+        );
+    }
+
+    @Override
+    public UpdateUserInfoResponseVo updateUserInfo(UpdateUserInfoRequestVo requestVo) throws YCDException {
+
+        User user = userRepository.findById(requestVo.getId()).orElse(null);
+        if (user == null || UserStatus.DELETE.getCode().equals(user.getStatus())) {
+            throw new YCDException(ResponseStatus.NOT_EXIST_USER.getCode(),
+                    ResponseStatus.NOT_EXIST_USER.getDescription());
+        }
+
+        //更新user info，不用flush
+        //JPA 不能只更新非null值，所以需要手动判断
+        user = userRepository.save(requestVo.updateUser(user));
+        return new UpdateUserInfoResponseVo(
+                user.getId()
+        );
+
     }
 }

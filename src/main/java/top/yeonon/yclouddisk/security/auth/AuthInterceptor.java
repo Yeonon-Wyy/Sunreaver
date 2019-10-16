@@ -45,6 +45,8 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
         String token = tokenWithBaraer.substring(7);
 
+        //1. 判断Token是否存在cache里（即Token是否有效）
+        //2. 判断Token里的id是否和request的id一致，防止横向越权
         Long userId = JwtUtil.getValueFromToken(token, "id", Long.class);
         if (!token.equals(tokenCache.getIfPresent(String.valueOf(userId)))
             || !getUserId(request).equals(userId)) {

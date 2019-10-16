@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import top.yeonon.yclouddisk.vo.RequestVo;
 
 /**
  * @Author yeonon
@@ -12,11 +13,12 @@ import org.apache.commons.lang3.StringUtils;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AcquireAuthTokenRequestVo {
+public class AcquireAuthTokenRequestVo implements RequestVo {
 
     String username;
     String password;
 
+    @Override
     public boolean validate() {
         return StringUtils.isNotEmpty(username)
                 && StringUtils.isNotEmpty(password);

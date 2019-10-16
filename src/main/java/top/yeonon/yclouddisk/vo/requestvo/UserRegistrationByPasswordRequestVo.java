@@ -3,6 +3,7 @@ package top.yeonon.yclouddisk.vo.requestvo;
 
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
+import top.yeonon.yclouddisk.vo.RequestVo;
 
 /**
  * @Author yeonon
@@ -12,12 +13,13 @@ import org.apache.commons.lang3.StringUtils;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserRegistrationByPasswordRequestVo {
+public class UserRegistrationByPasswordRequestVo implements RequestVo {
 
     private String username;
     private String password;
     private Integer sex;
 
+    @Override
     public boolean validate() {
         return StringUtils.isNotEmpty(username)
                 && StringUtils.isNotEmpty(password)

@@ -16,7 +16,7 @@ public enum UserStatus {
 
     // bad state
     RESTRICTED(-1, "Restricted Action"),
-    LOGOUT(-2, "User Logout")
+    DELETE(-2, "User Deleted")
     ;
 
 

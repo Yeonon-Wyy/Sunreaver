@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.*;
 import top.yeonon.yclouddisk.security.auth.TokenCheck;
 import top.yeonon.yclouddisk.service.IUserService;
 import top.yeonon.yclouddisk.vo.requestvo.QueryUserInfoRequestVo;
+import top.yeonon.yclouddisk.vo.requestvo.UpdateUserInfoRequestVo;
 import top.yeonon.yclouddisk.vo.requestvo.UserRegistrationByPasswordRequestVo;
 import top.yeonon.yclouddisk.vo.responsevo.QueryUserInfoResponseVo;
+import top.yeonon.yclouddisk.vo.responsevo.UpdateUserInfoResponseVo;
 import top.yeonon.yclouddisk.vo.responsevo.UserRegistrationByPasswordResponseVo;
 
 /**
@@ -30,6 +32,20 @@ public class UserController {
     public QueryUserInfoResponseVo queryUserInfo(@PathVariable("id") Long id) {
         QueryUserInfoRequestVo requestVo = new QueryUserInfoRequestVo(id);
         return userService.queryUserInfo(requestVo);
+    }
+
+    @GetMapping("/{id}/other")
+    public QueryUserInfoResponseVo queryOtherUserInfo(@PathVariable("id") Long id) {
+        QueryUserInfoRequestVo requestVo = new QueryUserInfoRequestVo(id);
+        return userService.queryOtherUserInfo(requestVo);
+    }
+
+    @TokenCheck
+    @PutMapping("/{id}")
+    public UpdateUserInfoResponseVo updateUserInfo(@PathVariable("id") Long id,
+                                                   @RequestBody UpdateUserInfoRequestVo requestVo) {
+        requestVo.setId(id);
+        return userService.updateUserInfo(requestVo);
     }
 
 }

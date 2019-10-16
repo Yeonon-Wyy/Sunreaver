@@ -15,14 +15,21 @@ import java.util.Date;
 @AllArgsConstructor
 public class QueryUserInfoResponseVo {
 
-    private String username;
-    private String password;
+    private String nickName;
     private Integer sex;
     private String avatar;
     private String phoneNumber;
     private String profile;
     private Integer status;
+    private Integer role;
     private Date createTime;
     private Date updateTime;
 
+    public QueryUserInfoResponseVo(String nickName, Integer sex, String avatar, String profile, Integer role) {
+        this.nickName = nickName;
+        this.sex = sex;
+        this.avatar = avatar;
+        this.profile = profile;
+        this.role = role;
+    }
 }

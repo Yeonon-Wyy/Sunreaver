@@ -3,6 +3,7 @@ package top.yeonon.yclouddisk.vo.requestvo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import top.yeonon.yclouddisk.vo.RequestVo;
 
 /**
  * @Author yeonon
@@ -11,12 +12,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class QueryUserInfoRequestVo {
+public class QueryUserInfoRequestVo implements RequestVo {
 
     private Long id;
 
+    @Override
     public boolean validate() {
-        return id != null && id > 0;
+        return id != null && id >= 0;
     }
 
 }
