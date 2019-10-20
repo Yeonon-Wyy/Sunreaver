@@ -63,6 +63,7 @@ public class UserServiceImpl implements IUserService {
                 user.getNickName(),
                 user.getSex(),
                 user.getAvatar(),
+                user.getEmail(),
                 user.getPhoneNumber(),
                 user.getProfile(),
                 user.getStatus(),

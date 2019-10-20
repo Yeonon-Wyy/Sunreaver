@@ -25,7 +25,6 @@ public class UserServicesAop {
 
     @Before("validateParam()")
     public void doBefore(JoinPoint joinPoint) {
-        System.out.println("参数校验");
         for (Object arg : joinPoint.getArgs()) {
             if (arg instanceof RequestVo) {
                 RequestVo requestVo = (RequestVo)arg;
