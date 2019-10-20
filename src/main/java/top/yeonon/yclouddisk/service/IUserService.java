@@ -51,4 +51,6 @@ public interface IUserService {
      */
     UpdateUserInfoResponseVo updateUserInfo(UpdateUserInfoRequestVo requestVo)
             throws YCDException;
+
+
 }

@@ -13,7 +13,7 @@ import java.util.Date;
  * @date 2019/10/10 0010 22:58
  **/
 @Entity
-@Table(name = "cloud_file")
+@Table(name = "ycd_cloud_file")
 @Getter
 @Setter
 @NoArgsConstructor

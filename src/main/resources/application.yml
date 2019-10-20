@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/ycd?useSSL=false
     username: root
-    password: 124563
+    password: asd124563
     driver-class-name: com.mysql.jdbc.Driver
 
   jpa:
