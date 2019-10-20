@@ -1,15 +1,12 @@
-
 server:
   port: 8080
 
-
-
 spring:
   application:
-    name: y-cloud-disk
+    name: sunreaver
 
   datasource:
-    url: jdbc:mysql://localhost:3306/ycd?useSSL=false
+    url: jdbc:mysql://localhost:3306/sunreaver?useSSL=false
     username: root
     password: asd124563
     driver-class-name: com.mysql.jdbc.Driver
