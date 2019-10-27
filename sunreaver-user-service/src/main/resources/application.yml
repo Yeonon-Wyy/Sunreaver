@@ -6,7 +6,7 @@ spring:
     name: sunreaver
 
   datasource:
-    url: jdbc:mysql://localhost:3306/sunreaver?useSSL=false
+    url: jdbc:mysql://localhost:3306/sunreaver-user?useSSL=false
     username: root
     password: asd124563
     driver-class-name: com.mysql.jdbc.Driver

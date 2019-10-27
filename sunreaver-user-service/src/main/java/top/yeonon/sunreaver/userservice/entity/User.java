@@ -17,7 +17,7 @@ import java.util.Date;
  * @date 2019/10/10 0010 22:31
  **/
 @Entity
-@Table(name = "sunreaver_user")
+@Table(name = "user")
 @Getter
 @Setter
 @NoArgsConstructor
